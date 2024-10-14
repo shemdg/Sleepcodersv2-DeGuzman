@@ -1,0 +1,21 @@
+in database/connection.js the database key value in const connections is not specified, so i just assigned my "ias2" and the value in port shouldnt be a string in port so i just changed it to default port 3306
+
+
+in server/app.js line 23, the value of secret is not specified ("your_secret_key"), so i just changed it to
+
+.env server, i modified DATABASE_NAME, PORT, SECRET_KEY, MAILER_USERNAME, MAILER PASSWORD to establish the database connection
+
+
+MY ERRORS:
+COULDNT LOG IN
+COULDNT CREATE AN ACCOUNT
+
+i added a function for it to work at the end of the server controller login js
+exports.PostRegister = async (req, res, next) => {
+
+env file = client
+env file = server
+should be same
+i added port (3306), DATABASE_NAME: "ias2", and my google secret key SECRET_KEY:, VITE_SECRET_KEY in both env file (client, server)
+
+
