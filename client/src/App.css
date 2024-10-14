@@ -1,0 +1,34 @@
+body {
+  font-family: "Fira Sans Condensed", sans-serif;
+}
+
+.loader {
+  width: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 #fff, -20px 0 #fff2;
+    background: #fff;
+  }
+
+  33% {
+    box-shadow: 20px 0 #fff, -20px 0 #fae7f4;
+    background: #fae7f4;
+  }
+
+  66% {
+    box-shadow: 20px 0 #fae7f4, -20px 0 #e4b1c7;
+    background: #fae7f4;
+  }
+
+  100% {
+    box-shadow: 20px 0 #fae7f4, -20px 0 #e4b1c7;
+    background: #e4b1c7;
+  }
+}
+
+
