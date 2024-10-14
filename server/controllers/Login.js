@@ -1,21 +1,33 @@
 const CryptoJS = require("crypto-js");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
 const connections = require("../database/connection");
 
 const { body, validationResult } = require("express-validator");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
 const UserModel = require("../model/User");
 const Attempt_Logs_Model = require("../model/Attempt_Logs");
 const Login_Logs_Model = require("../model/Login_logs");
 const OTP_Model = require("../model/OTP");
 
+<<<<<<< HEAD
 
 const encrypt = require("../util/encrypt");
 const decrypt = require("../util/decrypt");
 
 
+=======
+const encrypt = require("../util/encrypt");
+const decrypt = require("../util/decrypt");
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
 const moment = require("moment-timezone");
 const nodeMailer = require("nodemailer");
 const bcrypt = require("bcrypt");
@@ -24,8 +36,13 @@ function mailNewLocation(email, otp, ip_info, browser_info) {
   const transporter = nodeMailer.createTransport({
     service: "gmail",
     auth: {
+<<<<<<< HEAD
       user: process.env.MAILER_USERNAME, 
       pass: process.env.MAILER_PASSWORD, 
+=======
+      user: process.env.MAILER_USERNAME,
+      pass: process.env.MAILER_PASSWORD,
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     },
   });
 
@@ -52,12 +69,19 @@ function mailNewLocation(email, otp, ip_info, browser_info) {
 }
 
 const generateRandomOTP = () => {
+<<<<<<< HEAD
   return Math.floor(100000 + Math.random() * 900000).toString(); 
+=======
+  return Math.floor(100000 + Math.random() * 900000).toString();
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
 };
 
 exports.postLogin = async (req, res, next) => {
   try {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     let {
       ip,
       browserInfo,
@@ -72,14 +96,20 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (!ip || !browserInfo || !encryptedUsername || !encryptedPassword) {
       return res
         .status(400)
         .json({ error: "Invalid entry. All fields are required." });
     }
 
+<<<<<<< HEAD
    
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     const sanitizedIp = (ip || "").trim();
     const sanitizedBrowserInfo = JSON.stringify(browserInfo || {});
     const sanitizedUsername = (encryptedUsername || "").trim();
@@ -94,7 +124,10 @@ exports.postLogin = async (req, res, next) => {
 
     const currentDateTimePH = moment().tz("Asia/Manila");
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     let attemptLog = await Attempt_Logs_Model.findOne({
       where: { ip_address: ip, browser_info: browserInfo },
       order: [["createdAt", "DESC"]],
@@ -108,7 +141,10 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (attemptLog.locked) {
       const timeRestrictionExpired =
         attemptLog.time_restriction &&
@@ -128,7 +164,10 @@ exports.postLogin = async (req, res, next) => {
       }
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (attemptLog.attempt_count >= 4) {
       attemptLog.time_restriction = currentDateTimePH
         .add(1, "minutes")
@@ -143,10 +182,15 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
      
     const user = await UserModel.findOne({ where: { username } });
     if (!user) {
       
+=======
+    const user = await UserModel.findOne({ where: { username } });
+    if (!user) {
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       attemptLog.attempt_count = moment(attemptLog.createdAt).isSame(
         currentDateTimePH,
         "day"
@@ -161,10 +205,15 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
     
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       
+=======
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       attemptLog.attempt_count = moment(attemptLog.createdAt).isSame(
         currentDateTimePH,
         "day"
@@ -179,7 +228,10 @@ exports.postLogin = async (req, res, next) => {
       });
     }
 
+<<<<<<< HEAD
     
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (attemptLog) {
       attemptLog.attempt_count = 0;
       await attemptLog.save();
@@ -256,10 +308,15 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postVerifyOtp = async (req, res, next) => {
   try {
+<<<<<<< HEAD
    
     const { otp, ip, browserInfo } = req.body;
 
      
+=======
+    const { otp, ip, browserInfo } = req.body;
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (!ip || !browserInfo || !isValidEncryptedOTP(otp)) {
       return res.status(400).json({
         message:
@@ -276,32 +333,49 @@ exports.postVerifyOtp = async (req, res, next) => {
     });
 
     if (!otpRecord) {
+<<<<<<< HEAD
      
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
     const currentTime = moment().tz("Asia/Manila");
     const otpCreationTime = moment(otpRecord.createdAt).tz("Asia/Manila");
     if (currentTime.isAfter(otpCreationTime.add(3, "minutes"))) {
+<<<<<<< HEAD
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       return res.status(400).json({ message: "OTP has expired" });
     }
 
     await otpRecord.update({ used: true });
 
+<<<<<<< HEAD
     
     const sessionId = req.session.id;
 
     
+=======
+    const sessionId = req.session.id;
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     await Login_Logs_Model.create({
       session_id: sessionId,
       ip_address: decryptedIp,
       browser_info: decryptedBrowserInfo,
       verify: true,
+<<<<<<< HEAD
       user_id: sessionId, 
     });
 
     
+=======
+      user_id: sessionId,
+    });
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     await new Promise((resolve, reject) => {
       req.session.save((err) => {
         if (err) {
@@ -315,8 +389,11 @@ exports.postVerifyOtp = async (req, res, next) => {
 
     const encryptedSessionId = encrypt(sessionId);
 
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     return res.status(200).json({
       message: "OTP verification successful",
       sessionId: encryptedSessionId,
@@ -331,27 +408,43 @@ exports.postLogout = async (req, res, next) => {
   try {
     const { sessionId: encryptedSessionId } = req.body;
 
+<<<<<<< HEAD
     
     const sessionId = decrypt(encryptedSessionId);
 
     
+=======
+    const sessionId = decrypt(encryptedSessionId);
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
     if (!encryptedSessionId) {
       return res.status(400).json({
         message: "Invalid entry: Session ID is required.",
       });
     }
 
+<<<<<<< HEAD
      Use
     const Session = connections.models.Session; 
     const session = await Session.findOne({ where: { session_id: sessionId } });
 
     if (session) {
       
+=======
+    Use;
+    const Session = connections.models.Session;
+    const session = await Session.findOne({ where: { session_id: sessionId } });
+
+    if (session) {
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const loginLog = await Login_Logs_Model.findOne({
         where: { session_id: session.session_id },
       });
 
+<<<<<<< HEAD
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       if (loginLog) {
         await loginLog.destroy();
       }
@@ -374,7 +467,10 @@ exports.postLogout = async (req, res, next) => {
 };
 
 exports.PostRegister = [
+<<<<<<< HEAD
  
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
   body("username")
     .trim()
     .notEmpty()
@@ -397,24 +493,33 @@ exports.PostRegister = [
 
   async (req, res, next) => {
     try {
+<<<<<<< HEAD
       
       
 
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const decryptedUsername = decrypt(req.body.username);
       const decryptedPassword = decrypt(req.body.password);
       const decryptedEmail = decrypt(req.body.email);
       const decryptedName = decrypt(req.body.name);
 
+<<<<<<< HEAD
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
 
+<<<<<<< HEAD
      
 
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const existingEmail = await UserModel.findOne({
         where: { email: decryptedEmail },
       });
@@ -422,7 +527,10 @@ exports.PostRegister = [
         return res.status(409).json({ message: "Email already exists." });
       }
 
+<<<<<<< HEAD
       
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const existingUsername = await UserModel.findOne({
         where: { username: decryptedUsername },
       });
@@ -430,10 +538,15 @@ exports.PostRegister = [
         return res.status(409).json({ message: "Username already exists." });
       }
 
+<<<<<<< HEAD
       
       const hashedPassword = await bcrypt.hash(decryptedPassword, 10);
 
       
+=======
+      const hashedPassword = await bcrypt.hash(decryptedPassword, 10);
+
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       const newUser = await UserModel.create({
         username: decryptedUsername,
         password: hashedPassword,
@@ -444,8 +557,11 @@ exports.PostRegister = [
         updatedAt: new Date(),
       });
 
+<<<<<<< HEAD
 
        
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
       return res
         .status(201)
         .json({ message: "User registered successfully", userId: newUser.id });
@@ -455,6 +571,7 @@ exports.PostRegister = [
     }
   },
 ];
+<<<<<<< HEAD
 
 
 
@@ -527,3 +644,5 @@ exports.PostRegister = async (req, res, next) => {
     return res.status(500).json({ message: "Internal server error." });
   }
 };
+=======
+>>>>>>> 21d82abf2e86b7c5c1e7606b21fedf89d43ff238
